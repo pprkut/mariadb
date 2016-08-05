@@ -3008,6 +3008,9 @@ public:
   void set_last_field_type(const Lex_field_type_st &type);
   bool set_bincmp(CHARSET_INFO *cs, bool bin);
 
+  sp_variable *sp_param_init(LEX_STRING name);
+  bool sp_param_fill_definition(sp_variable *spvar);
+
   int case_stmt_action_expr(Item* expr);
   int case_stmt_action_when(Item *when, bool simple);
   int case_stmt_action_then();
