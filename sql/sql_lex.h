@@ -3012,7 +3012,6 @@ public:
   void restore_set_statement_var();
 
   void init_last_field(Column_definition *field, const char *name, CHARSET_INFO *cs);
-  void set_last_field_type(const Lex_field_type_st &type);
   bool set_bincmp(CHARSET_INFO *cs, bool bin);
 
   sp_variable *sp_param_init(LEX_STRING name);
