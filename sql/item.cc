@@ -3223,9 +3223,10 @@ default_set_param_func(Item_param *param,
 }
 
 
-Item_param::Item_param(THD *thd, uint pos_in_query_arg):
+Item_param::Item_param(THD *thd, char *name_arg,
+                       uint pos_in_query_arg, uint len_in_query_arg):
   Item_basic_value(thd),
-  Rewritable_query_parameter(pos_in_query_arg, 1),
+  Rewritable_query_parameter(pos_in_query_arg, len_in_query_arg),
   Type_handler_hybrid_field_type(MYSQL_TYPE_VARCHAR),
   state(NO_VALUE),
   /* Don't pretend to be a literal unless value for this item is set. */
@@ -3233,7 +3234,7 @@ Item_param::Item_param(THD *thd, uint pos_in_query_arg):
   set_param_func(default_set_param_func),
   m_out_param_info(NULL)
 {
-  name= (char*) "?";
+  name= name_arg;
   /* 
     Since we can't say whenever this item can be NULL or cannot be NULL
     before mysql_stmt_execute(), so we assuming that it can be NULL until
