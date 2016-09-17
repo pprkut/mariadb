@@ -3006,6 +3006,13 @@ public:
   void init_last_field(Column_definition *field, const char *name, CHARSET_INFO *cs);
   void set_last_field_type(const Lex_field_type_st &type);
   bool set_bincmp(CHARSET_INFO *cs, bool bin);
+
+  int case_stmt_action_expr(Item* expr);
+  int case_stmt_action_when(Item *when, bool simple);
+  int case_stmt_action_then();
+  bool add_select_to_union_list(bool is_union_distinct,  bool is_top_level);
+  bool setup_select_in_parentheses();
+
   // Check if "KEY IF NOT EXISTS name" used outside of ALTER context
   bool check_add_key(DDL_options_st ddl)
   {
@@ -3283,6 +3290,7 @@ extern void lex_end_stage2(LEX *lex);
 void end_lex_with_single_table(THD *thd, TABLE *table, LEX *old_lex);
 int init_lex_with_single_table(THD *thd, TABLE *table, LEX *lex);
 extern int MYSQLlex(union YYSTYPE *yylval, THD *thd);
+extern int ORAlex(union YYSTYPE *yylval, THD *thd);
 
 extern void trim_whitespace(CHARSET_INFO *cs, LEX_STRING *str,
                             uint *prefix_removed);
@@ -3296,5 +3304,9 @@ extern bool is_lex_native_function(const LEX_STRING *name);
 void my_missing_function_error(const LEX_STRING &token, const char *name);
 bool is_keyword(const char *name, uint len);
 
+Virtual_column_info *add_virtual_expression(THD *thd, const char *txt,
+                                           size_t size, Item *expr);
+Item* handle_sql2003_note184_exception(THD *thd, Item* left, bool equal,
+                                       Item *expr);
 #endif /* MYSQL_SERVER */
 #endif /* SQL_LEX_INCLUDED */
