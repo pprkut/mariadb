@@ -275,3 +275,18 @@ set option=1;
 ERROR HY000: Unknown system variable 'option'
 set option option=1;
 ERROR HY000: Unknown system variable 'option'
+#
+# MDEV-10142 Pluggable parser
+# Testing keywords that were added into lex.h for Oracle compatibility
+# that are not reserved keywords in MariaDB
+#
+CREATE TABLE clob (clob int);
+DROP TABLE clob;
+CREATE TABLE elsif (elsif INT);
+DROP TABLE elsif;
+CREATE TABLE exception (exception INT);
+DROP TABLE exception;
+CREATE TABLE raw (raw int);
+DROP TABLE raw;
+CREATE TABLE varchar2 (varchar2 int);
+DROP TABLE varchar2;
