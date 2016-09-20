@@ -1522,7 +1522,8 @@ execute:
 
 execute_using:
           /* nothing */
-        | USING execute_var_list
+        | USING            { Lex->expr_allows_subselect= false; }
+          execute_var_list { Lex->expr_allows_subselect= true; }
         ;
 
 execute_var_list:
@@ -1531,12 +1532,9 @@ execute_var_list:
         ;
 
 execute_var_ident:
-          '@' ident_or_text
+          expr
           {
-            LEX *lex=Lex;
-            LEX_STRING *lexstr= (LEX_STRING*)thd->memdup(&$2, sizeof(LEX_STRING));
-            if (!lexstr || lex->prepared_stmt_params.push_back(lexstr,
-                                                               thd->mem_root))
+            if (Lex->prepared_stmt_params.push_back($1, thd->mem_root))
               MYSQL_YYABORT;
           }
         ;
