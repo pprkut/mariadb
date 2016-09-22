@@ -539,6 +539,7 @@ bool my_yyoverflow(short **a, YYSTYPE **b, ulong *yystacksize);
 %token  IGNORE_DOMAIN_IDS_SYM
 %token  IGNORE_SYM
 %token  IGNORE_SERVER_IDS_SYM
+%token  IMMEDIATE_SYM                 /* SQL-2003-R */
 %token  IMPORT
 %token  INDEXES
 %token  INDEX_SYM
@@ -1516,6 +1517,12 @@ execute:
             LEX *lex= thd->lex;
             lex->sql_command= SQLCOM_EXECUTE;
             lex->prepared_stmt_name= $2;
+          }
+          execute_using
+          {}
+        | EXECUTE_SYM IMMEDIATE_SYM prepare_src
+          {
+            Lex->sql_command= SQLCOM_EXECUTE_IMMEDIATE;
           }
           execute_using
           {}

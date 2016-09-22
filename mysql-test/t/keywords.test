@@ -201,3 +201,6 @@ DROP TABLE decode;
 
 CREATE TABLE rowcount (rowcount int);
 DROP TABLE rowcount;
+
+CREATE TABLE immediate (immediate int);
+DROP TABLE immediate;

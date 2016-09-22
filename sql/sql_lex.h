@@ -3151,6 +3151,17 @@ public:
   bool sp_for_loop_index_and_bounds(THD *thd, const Lex_for_loop_st &loop);
   bool sp_for_loop_finalize(THD *thd, const Lex_for_loop_st &loop);
 
+  bool prepared_stmt_params_fix_fields(THD *thd)
+  {
+    // Fix Items in the EXECUTE..USING list
+    List_iterator_fast<Item> param_it(prepared_stmt_params);
+    while (Item *param= param_it++)
+    {
+      if (param->fix_fields(thd, 0))
+        return true;
+    }
+    return false;
+  }
   // Check if "KEY IF NOT EXISTS name" used outside of ALTER context
   bool check_add_key(DDL_options_st ddl)
   {
