@@ -1531,7 +1531,13 @@ execute:
 execute_using:
           /* nothing */
         | USING            { Lex->expr_allows_subselect= false; }
-          execute_var_list { Lex->expr_allows_subselect= true; }
+          execute_var_list
+          {
+            if (Lex->table_or_sp_used())
+              my_yyabort_error((ER_SUBQUERIES_NOT_SUPPORTED, MYF(0),
+                               "EXECUTE..USING"));
+            Lex->expr_allows_subselect= true;
+          }
         ;
 
 execute_var_list:

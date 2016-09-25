@@ -4129,6 +4129,12 @@ PREPARE stmt FROM 'SELECT ? FROM DUAL';
 EXECUTE stmt USING (SELECT 1);
 ERROR 42000: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'SELECT 1)' at line 1
 DEALLOCATE PREPARE stmt;
+CREATE FUNCTION f1() RETURNS VARCHAR(10) RETURN 'test';
+PREPARE stmt FROM 'SELECT ? FROM DUAL';
+EXECUTE stmt USING f1();
+ERROR 42000: EXECUTE..USING does not support subqueries or stored functions.
+DEALLOCATE PREPARE stmt;
+DROP FUNCTION f1;
 #
 # Testing erroneous expressions in USING
 #
@@ -4315,6 +4321,10 @@ ERROR HY000: Illegal mix of collations (latin1_swedish_ci,COERCIBLE) and (latin2
 #
 EXECUTE IMMEDIATE 'SELECT ? FROM DUAL' USING (SELECT 1);
 ERROR 42000: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'SELECT 1)' at line 1
+CREATE FUNCTION f1() RETURNS VARCHAR(10) RETURN 'test';
+EXECUTE IMMEDIATE 'SELECT ? FROM DUAL' USING f1();
+ERROR 42000: EXECUTE..USING does not support subqueries or stored functions.
+DROP FUNCTION f1;
 #
 # DDL
 #
