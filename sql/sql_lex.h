@@ -3157,7 +3157,7 @@ public:
     List_iterator_fast<Item> param_it(prepared_stmt_params);
     while (Item *param= param_it++)
     {
-      if (param->fix_fields(thd, 0))
+      if (param->fix_fields(thd, 0) || param->check_cols(1))
         return true;
     }
     return false;
