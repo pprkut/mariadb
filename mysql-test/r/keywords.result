@@ -296,3 +296,7 @@ CREATE TABLE rowcount (rowcount int);
 DROP TABLE rowcount;
 CREATE TABLE immediate (immediate int);
 DROP TABLE immediate;
+CREATE TABLE isopen (isopen int);
+DROP TABLE isopen;
+CREATE TABLE notfound (notfound int);
+DROP TABLE notfound;
