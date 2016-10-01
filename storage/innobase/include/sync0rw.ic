@@ -338,7 +338,7 @@ rw_lock_set_writer_id_and_recursion_flag(
 
 #ifdef INNODB_RW_LOCKS_USE_ATOMICS
 
-	my_atomic_storelong(&lock->writer_thread, curr_thread);
+	my_atomic_storelong(&lock->writer_thread, (long) curr_thread);
 	lock->recursive = recursive;
 
 #else /* INNODB_RW_LOCKS_USE_ATOMICS */

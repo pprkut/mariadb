@@ -1987,7 +1987,7 @@ RecLock::mark_trx_for_rollback(trx_t* trx)
 	trx->in_innodb |= TRX_FORCE_ROLLBACK | TRX_FORCE_ROLLBACK_ASYNC;
 
 	ut_a(!trx->killed_by);
-	my_atomic_storelong(&trx->killed_by, os_thread_get_curr_id());
+	my_atomic_storelong(&trx->killed_by, (long) os_thread_get_curr_id());
 
 	m_trx->hit_list.push_back(hit_list_t::value_type(trx));
 
