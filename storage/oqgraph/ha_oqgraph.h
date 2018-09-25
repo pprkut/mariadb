@@ -44,8 +44,9 @@ namespace open_query
 class ha_oqgraph: public handler
 {
   TABLE_SHARE share[1];
+  TABLE_LIST *backing;
   bool have_table_share;
-  TABLE edges[1];
+  TABLE *edges;
   Field *origid;
   Field *destid;
   Field *weight;
